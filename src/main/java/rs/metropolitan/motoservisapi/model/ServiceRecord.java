@@ -1,14 +1,13 @@
 package rs.metropolitan.motoservisapi.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "service_records")
@@ -36,6 +35,7 @@ public class ServiceRecord {
     @Enumerated(EnumType.STRING)
     private ServiceStatus status;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "serviceRecord", cascade = CascadeType.ALL)
     private List<Part> parts;
 }

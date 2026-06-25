@@ -2,11 +2,13 @@ package rs.metropolitan.motoservisapi.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import rs.metropolitan.motoservisapi.dto.PartResponseDto;
 import rs.metropolitan.motoservisapi.model.Part;
 import rs.metropolitan.motoservisapi.model.ServiceRecord;
 import rs.metropolitan.motoservisapi.repository.PartRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PartService {
@@ -22,6 +24,28 @@ public class PartService {
 
     public List<Part> findAll() {
         return partRepository.findAll();
+    }
+
+    public List<PartResponseDto> findAllDto() {
+        return partRepository.findAll().stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public PartResponseDto toDto(Part part) {
+        PartResponseDto dto = new PartResponseDto();
+        dto.setId(part.getId());
+        dto.setName(part.getName());
+        dto.setPrice(part.getPrice());
+        if (part.getServiceRecord() != null) {
+            dto.setServiceRecordId(part.getServiceRecord().getId());
+            dto.setServiceRecordInfo(
+                    part.getServiceRecord().getMotorcycle().getBrand() + " " +
+                            part.getServiceRecord().getMotorcycle().getModel() + " - " +
+                            part.getServiceRecord().getDate()
+            );
+        }
+        return dto;
     }
 
     public Part findById(Long id) {

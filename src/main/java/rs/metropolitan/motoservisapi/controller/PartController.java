@@ -2,6 +2,7 @@ package rs.metropolitan.motoservisapi.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.metropolitan.motoservisapi.dto.PartResponseDto;
 import rs.metropolitan.motoservisapi.model.Part;
 import rs.metropolitan.motoservisapi.service.PartService;
 
@@ -18,8 +19,8 @@ public class PartController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Part>> findAll() {
-        return ResponseEntity.ok(partService.findAll());
+    public ResponseEntity<List<PartResponseDto>> findAll() {
+        return ResponseEntity.ok(partService.findAllDto());
     }
 
     @GetMapping("/{id}")

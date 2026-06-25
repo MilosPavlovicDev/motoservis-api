@@ -1,5 +1,6 @@
 package rs.metropolitan.motoservisapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Part {
 
     private Double price;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "service_record_id")
     private ServiceRecord serviceRecord;
